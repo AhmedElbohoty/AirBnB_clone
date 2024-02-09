@@ -18,11 +18,12 @@ class FileStorage():
     Private Attributes:
         __file_path (str):  path to the JSON file.
         __objects (dict): Empty but will store all objects by <class name>.id.
-
+        __classes (dict): dictionary contains all classes
     '''
 
     __file_path = 'file.json'
     __objects = {}
+    __classess = {"BaseModel": BaseModel}
 
     def all(self):
         '''Returns the dictionary __objects'''
@@ -69,9 +70,7 @@ class FileStorage():
         Args:
             jsn (str): json data
         '''
-        classes = {'BaseModel', BaseModel}
-
         for v in jsn.values():
             classname = v['__class__']
-            obj = getattr(classes, classname)(**v)
+            obj = self.__classess[classname](**v)
             self.new(obj)
