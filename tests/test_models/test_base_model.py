@@ -26,11 +26,41 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(bm.updated_at, datetime.datetime)
 
     def test_save(self):
-        '''Tests for public method save'''
+        '''Tests for public 'save' method'''
         bm = BaseModel()
         old_updated_at = bm.updated_at
         bm.save()
         self.assertTrue(old_updated_at < bm.updated_at)
+
+    def test_to_dict(self):
+        '''Tests for 'to_dict' method'''
+        bm = BaseModel()
+        bm.number = 98
+        bm_json = bm.to_dict()
+        self.assertEqual(bm_json['__class__'], 'BaseModel')
+        self.assertEqual(bm_json['id'], bm.id)
+        self.assertEqual(bm_json['created_at'], bm.created_at.isoformat())
+        self.assertEqual(bm_json['updated_at'], bm.updated_at.isoformat())
+        self.assertEqual(bm_json['number'], bm.number)
+
+    def test_re_create_instance(self):
+        '''Tests for re-creating an instance'''
+        bm = BaseModel()
+        bm.number = 98
+        bm_json = bm.to_dict()
+        new_bm = BaseModel(**bm_json)
+
+        self.assertEqual(new_bm.id, bm.id)
+        self.assertEqual(new_bm.created_at, bm.created_at)
+        self.assertEqual(new_bm.updated_at, bm.updated_at)
+        self.assertEqual(new_bm.number, bm.number)
+
+        new_bm.number = 100
+        new_bm.save()
+        self.assertNotEqual(new_bm.number, bm.number)
+        self.assertNotEqual(new_bm.updated_at, bm.updated_at)
+
+        self.assertFalse(new_bm is bm)
 
 
 if __name__ == '__main__':
