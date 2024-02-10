@@ -4,6 +4,7 @@ HBNBCommand:
     the entry point of the command interpreter.
 '''
 import cmd
+import re
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -151,7 +152,13 @@ class HBNBCommand(cmd.Cmd):
             super().default(line)
             return
 
-        self.do_count(classname)
+        method = args[1].split('(')[0]
+        if method == 'count':
+            self.do_count(classname)
+
+        if method == 'destroy':
+            obj_id = args[1].split('(')[1].split(')')[0]
+            self.do_destroy('{} {}'.format(classname, obj_id))
 
     def validate_input(self, inputs, args):
         '''Validate user input
