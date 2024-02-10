@@ -28,8 +28,8 @@ class BaseModel():
         '''
         if len(kwargs) == 0:
             self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
             models.storage.new(self)
             return
@@ -59,7 +59,7 @@ class BaseModel():
 
     def save(self):
         '''Updates the public instance attribute updated_at'''
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.utcnow()
 
         models.storage.save()
 
