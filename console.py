@@ -156,6 +156,9 @@ class HBNBCommand(cmd.Cmd):
         if method == 'count':
             self.do_count(classname)
 
+        if method == 'all':
+            self.do_all(classname)
+
         if method == 'destroy':
             obj_id = args[1].split('(')[1].split(')')[0]
             self.do_destroy('{} {}'.format(classname, obj_id))
