@@ -26,22 +26,23 @@ class BaseModel():
             *args: Variable length argument list.
             **kwargs: Arbitrary keyword arguments.
         '''
+        self.id = str(uuid4())
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
+
+        if len(kwargs) != 0:
+            dates_attrs = ['created_at', 'updated_at']
+            for k, v in kwargs.items():
+                if k == '__class__':
+                    continue
+
+                if k in dates_attrs:
+                    v = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
+
+                setattr(self, k, v)
+
         if len(kwargs) == 0:
-            self.id = str(uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
             models.storage.new(self)
-            return
-
-        dates_attrs = ['created_at', 'updated_at']
-        for k, v in kwargs.items():
-            if k == '__class__':
-                continue
-
-            if k in dates_attrs:
-                v = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
-
-            setattr(self, k, v)
 
     def to_dict(self):
         '''Returns a dictionary representation of a instance.
