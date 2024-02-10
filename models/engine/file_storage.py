@@ -23,7 +23,7 @@ class FileStorage():
 
     __file_path = 'file.json'
     __objects = {}
-    __classess = {"BaseModel": BaseModel}
+    __classess = {'BaseModel': BaseModel}
 
     def all(self):
         '''Returns the dictionary __objects'''
