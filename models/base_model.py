@@ -30,7 +30,6 @@ class BaseModel():
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
-
             models.storage.new(self)
             return
 
@@ -40,7 +39,7 @@ class BaseModel():
                 continue
 
             if k in dates_attrs:
-                v = datetime.fromisoformat(v)
+                v = datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
 
             setattr(self, k, v)
 
