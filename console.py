@@ -160,6 +160,10 @@ class HBNBCommand(cmd.Cmd):
             obj_id = args[1].split('(')[1].split(')')[0]
             self.do_destroy('{} {}'.format(classname, obj_id))
 
+        if method == 'show':
+            obj_id = args[1].split('(')[1].split(')')[0]
+            self.do_show('{} {}'.format(classname, obj_id))
+
     def validate_input(self, inputs, args):
         '''Validate user input
 
