@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
 
         Args:
             inp (str): user input.
-            args (arr): the args to be checked against input.
+            args (list): the args to be checked against input.
         '''
         classes = self.__classess
 
