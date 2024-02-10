@@ -7,6 +7,7 @@ FileStorage:
 import json
 from os.path import isfile
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
@@ -23,7 +24,7 @@ class FileStorage():
 
     __file_path = 'file.json'
     __objects = {}
-    __classess = {'BaseModel': BaseModel}
+    __classess = {'BaseModel': BaseModel, 'User': User}
 
     def all(self):
         '''Returns the dictionary __objects'''

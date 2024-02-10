@@ -5,6 +5,7 @@ HBNBCommand:
 '''
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -15,7 +16,7 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): the command prompt.
         __classes (dict): dictionary contains all classes.
     '''
-    __classess = {'BaseModel': BaseModel}
+    __classess = {'BaseModel': BaseModel, 'User': User}
     prompt = '(hbnb) '
 
     def do_quit(self, _):
@@ -31,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         '''Don't execute anything'''
 
     def do_create(self, arg):
-        '''Creates a new instance of BaseModel, saves it
+        '''Creates a new instance of class, saves it
         (to the JSON file) and prints the id
         '''
         inputs = arg.split()
@@ -116,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         for _, v in objects.items():
-            if type(v).__name__ == classname:
+            if v.__class__.__name__ == classname:
                 res.append(str(v))
         print(res)
 
