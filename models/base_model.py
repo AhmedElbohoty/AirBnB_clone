@@ -19,7 +19,7 @@ class BaseModel():
                                and it will be updated with every changes.
     '''
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         '''Initialize the instance
 
         Args:
