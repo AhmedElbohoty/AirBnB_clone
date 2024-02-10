@@ -21,9 +21,9 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): the command prompt.
         __classes (dict): dictionary contains all classes.
     '''
-    __classess = {'BaseModel': BaseModel, 'User': User, 'State': State,
-                  'City': City, 'Amenity': Amenity,
-                  'Place': Place, 'Review': Review}
+    __classes = {'BaseModel': BaseModel, 'User': User, 'State': State,
+                 'City': City, 'Amenity': Amenity,
+                 'Place': Place, 'Review': Review}
     prompt = '(hbnb) '
 
     def do_quit(self, _):
@@ -48,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         if not is_valid:
             return
 
-        obj = self.__classess[inputs[0]]()
+        obj = self.__classes[inputs[0]]()
         obj.save()
         print(obj.id)
 
@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         classname = inputs[0]
-        if classname not in self.__classess:
+        if classname not in self.__classes:
             print("** class doesn't exist **")
             return
 
@@ -128,6 +128,31 @@ class HBNBCommand(cmd.Cmd):
                 res.append(str(v))
         print(res)
 
+    def do_count(self, arg):
+        '''Retrieve the number of instances of a class.
+        '''
+        counter = 0
+        objects = storage.all()
+        for _, v in objects.items():
+            if v.__class__.__name__ == arg:
+                counter += 1
+        print(counter)
+
+    def default(self, line):
+        args = line.split('.')
+        classes = self.__classes
+
+        if len(args) != 2:
+            super().default(line)
+            return
+
+        classname = args[0]
+        if classname not in classes:
+            super().default(line)
+            return
+
+        self.do_count(classname)
+
     def validate_input(self, inputs, args):
         '''Validate user input
 
@@ -135,7 +160,7 @@ class HBNBCommand(cmd.Cmd):
             inp (str): user input.
             args (list): the args to be checked against input.
         '''
-        classes = self.__classess
+        classes = self.__classes
 
         for i, arg in enumerate(args):
             if arg == 'classname':

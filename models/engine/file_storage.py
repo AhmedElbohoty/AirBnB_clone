@@ -29,9 +29,9 @@ class FileStorage():
 
     __file_path = 'file.json'
     __objects = {}
-    __classess = {'BaseModel': BaseModel, 'User': User, 'State': State,
-                  'City': City, 'Amenity': Amenity,
-                  'Place': Place, 'Review': Review}
+    __classes = {'BaseModel': BaseModel, 'User': User, 'State': State,
+                 'City': City, 'Amenity': Amenity,
+                 'Place': Place, 'Review': Review}
 
     def all(self):
         '''Returns the dictionary __objects'''
@@ -80,5 +80,5 @@ class FileStorage():
         '''
         for v in jsn.values():
             classname = v['__class__']
-            obj = self.__classess[classname](**v)
+            obj = self.__classes[classname](**v)
             self.new(obj)
