@@ -66,5 +66,5 @@ class BaseModel():
         '''Return the representation of Instance.'''
         instance_id = self.id
         classname = self.__class__.__name__
-        instance_dict = self.__dict__
+        instance_dict = self.to_dict()
         return '[{}] ({}) {}'.format(classname, instance_id, instance_dict)
