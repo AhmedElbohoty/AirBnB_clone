@@ -47,6 +47,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(classes_attr, dir(storage))
         self.assertIsInstance(getattr(storage, classes_attr), dict)
 
+    def test_3_init_no_args(self):
+        '''Create file storage with no arguments'''
+        with self.assertRaises(TypeError) as e:
+            FileStorage.__init__()
+
 
 class TestFileStorageApp(unittest.TestCase):
     '''Unit tests for the main app storage'''
