@@ -60,11 +60,19 @@ class TestFileStorageApp(unittest.TestCase):
         '''Reset storage'''
         self.storage.reset()
 
+    def test_doc(self):
+        '''Test for module documentation'''
+        self.assertTrue(len(self.storage.__doc__) > 0)
+
+    def test_class_doc(self):
+        '''Test for class documentation'''
+        self.assertTrue(len(FileStorage.__doc__) > 0)
+
     def test_app_storage(self):
         '''Check if the main file storage is created'''
         self.assertEqual(type(self.storage), FileStorage)
 
-    def test_all(self):
+    def test_all_empty(self):
         '''Test 'all' method'''
         storage = self.storage
         self.assertEqual(storage.all(), {})
@@ -100,8 +108,8 @@ class TestFileStorageApp(unittest.TestCase):
 
         self.assertIn('BaseModel.{}'.format(bm.id), objects)
 
-    def test_save_method(self):
-        ''''Tests the save method'''
+    def test_save(self):
+        ''''Tests the 'save' method'''
         storage = self.storage
 
         bm = BaseModel()
