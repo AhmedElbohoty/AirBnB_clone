@@ -72,6 +72,15 @@ class FileStorage():
             except json.JSONDecodeError:
                 pass
 
+    def update_file_path(self, arg):
+        '''Update the file path'''
+        self.__file_path = arg
+
+    def reset(self):
+        '''To reset storage'''
+        self.__objects = {}
+        self.save()
+
     def serialize_loaded_json(self, jsn):
         '''Serialize json loaded from file
 
