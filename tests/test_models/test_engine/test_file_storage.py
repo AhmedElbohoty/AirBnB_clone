@@ -49,8 +49,13 @@ class TestFileStorage(unittest.TestCase):
 
     def test_init_no_args(self):
         '''Create file storage with no arguments'''
-        with self.assertRaises(TypeError) as e:
+        with self.assertRaises(TypeError):
             FileStorage.__init__()
+
+    def test_init_extra_arg(self):
+        '''Tests __init__ with many arguments.'''
+        with self.assertRaises(TypeError):
+            FileStorage('arg')
 
 
 class TestFileStorageApp(unittest.TestCase):
