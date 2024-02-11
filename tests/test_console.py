@@ -32,12 +32,12 @@ class TestHBNBCommand(unittest.TestCase):
     # def test_quit(self):
     #     '''Tests for 'quit' method'''
     #     with patch('sys.stdout', new=StringIO()):
-    #         self.assertTrue(HBNBCommand().onecmd('quit'))
+    #         self.assertTrue(HBNBCommand().onecmd('quit')
 
     # def test_EOF(self):
     #     '''Tests for 'EOF' method'''
     #     with patch('sys.stdout', new=StringIO()):
-    #         self.assertTrue(HBNBCommand().onecmd('EOF'))
+    #         self.assertTrue(HBNBCommand().onecmd('EOF')
 
     def test_empty(self):
         '''Tests for empty line'''
@@ -155,7 +155,7 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -163,13 +163,13 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -177,7 +177,7 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy BaseModel'))
+            HBNBCommand().onecmd('destroy BaseModel')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -185,7 +185,7 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'BaseModel.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('BaseModel.destroy()'))
+            HBNBCommand().onecmd('BaseModel.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -193,7 +193,7 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy BaseModel 1'))
+            HBNBCommand().onecmd('destroy BaseModel 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -201,7 +201,7 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'BaseModel.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('BaseModel.destroy(1)'))
+            HBNBCommand().onecmd('BaseModel.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -233,6 +233,60 @@ class TestHBNBCommandBaseModel(unittest.TestCase):
             HBNBCommand().onecmd('count BaseModel')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update BaseModel')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'BaseModel.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('BaseModel.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update BaseModel 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'BaseModel.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('BaseModel.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandUser(unittest.TestCase):
@@ -344,7 +398,7 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -352,13 +406,13 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -366,7 +420,7 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy User'))
+            HBNBCommand().onecmd('destroy User')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -374,7 +428,7 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'User.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('User.destroy()'))
+            HBNBCommand().onecmd('User.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -382,7 +436,7 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy User 1'))
+            HBNBCommand().onecmd('destroy User 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -390,7 +444,7 @@ class TestHBNBCommandUser(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'User.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('User.destroy(1)'))
+            HBNBCommand().onecmd('User.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -422,6 +476,60 @@ class TestHBNBCommandUser(unittest.TestCase):
             HBNBCommand().onecmd('count User')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update User')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'User.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('User.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update User 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'User.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('User.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandAmenity(unittest.TestCase):
@@ -533,7 +641,7 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -541,13 +649,13 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -555,7 +663,7 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Amenity'))
+            HBNBCommand().onecmd('destroy Amenity')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -563,7 +671,7 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'Amenity.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Amenity.destroy()'))
+            HBNBCommand().onecmd('Amenity.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -571,7 +679,7 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Amenity 1'))
+            HBNBCommand().onecmd('destroy Amenity 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -579,7 +687,7 @@ class TestHBNBCommandAmenity(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'Amenity.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Amenity.destroy(1)'))
+            HBNBCommand().onecmd('Amenity.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -611,6 +719,60 @@ class TestHBNBCommandAmenity(unittest.TestCase):
             HBNBCommand().onecmd('count Amenity')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Amenity')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'Amenity.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Amenity.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Amenity 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'Amenity.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Amenity.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandCity(unittest.TestCase):
@@ -722,7 +884,7 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -730,13 +892,13 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -744,7 +906,7 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy City'))
+            HBNBCommand().onecmd('destroy City')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -752,7 +914,7 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'City.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('City.destroy()'))
+            HBNBCommand().onecmd('City.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -760,7 +922,7 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy City 1'))
+            HBNBCommand().onecmd('destroy City 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -768,7 +930,7 @@ class TestHBNBCommandCity(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'City.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('City.destroy(1)'))
+            HBNBCommand().onecmd('City.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -800,6 +962,60 @@ class TestHBNBCommandCity(unittest.TestCase):
             HBNBCommand().onecmd('count City')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update City')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'City.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('City.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update City 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'City.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('City.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandPlace(unittest.TestCase):
@@ -911,7 +1127,7 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -919,13 +1135,13 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -933,7 +1149,7 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Place'))
+            HBNBCommand().onecmd('destroy Place')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -941,7 +1157,7 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'Place.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Place.destroy()'))
+            HBNBCommand().onecmd('Place.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -949,7 +1165,7 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Place 1'))
+            HBNBCommand().onecmd('destroy Place 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -957,7 +1173,7 @@ class TestHBNBCommandPlace(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'Place.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Place.destroy(1)'))
+            HBNBCommand().onecmd('Place.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -989,6 +1205,60 @@ class TestHBNBCommandPlace(unittest.TestCase):
             HBNBCommand().onecmd('count Place')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Place')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'Place.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Place.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Place 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'Place.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Place.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandState(unittest.TestCase):
@@ -1100,7 +1370,7 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1108,13 +1378,13 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1122,7 +1392,7 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy State'))
+            HBNBCommand().onecmd('destroy State')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1130,7 +1400,7 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'State.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('State.destroy()'))
+            HBNBCommand().onecmd('State.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1138,7 +1408,7 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy State 1'))
+            HBNBCommand().onecmd('destroy State 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1146,7 +1416,7 @@ class TestHBNBCommandState(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'State.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('State.destroy(1)'))
+            HBNBCommand().onecmd('State.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1178,6 +1448,60 @@ class TestHBNBCommandState(unittest.TestCase):
             HBNBCommand().onecmd('count State')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update State')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'State.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update State 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'State.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 class TestHBNBCommandReview(unittest.TestCase):
@@ -1289,7 +1613,7 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_no_class(self):
         '''Test 'destroy' method with no class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy'))
+            HBNBCommand().onecmd('destroy')
 
             msg = '** class name missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1297,13 +1621,13 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_invalid_class(self):
         '''Test 'destroy' method with invalid class'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+            HBNBCommand().onecmd('destroy InvalidModel')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
 
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+            HBNBCommand().onecmd('InvalidModel.destroy()')
 
             msg = '** class doesn\'t exist **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1311,7 +1635,7 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_id_missing(self):
         '''Test 'destroy' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Review'))
+            HBNBCommand().onecmd('destroy Review')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1319,7 +1643,7 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_id_missing_class_method(self):
         '''Test 'Review.destroy()' method with no id'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Review.destroy()'))
+            HBNBCommand().onecmd('Review.destroy()')
 
             msg = '** instance id missing **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1327,7 +1651,7 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_no_instance(self):
         '''Test 'destroy' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('destroy Review 1'))
+            HBNBCommand().onecmd('destroy Review 1')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1335,7 +1659,7 @@ class TestHBNBCommandReview(unittest.TestCase):
     def test_destroy_no_instance_class_method(self):
         '''Test 'Review.destroy()' method with no instance'''
         with patch('sys.stdout', new=StringIO()) as f:
-            self.assertFalse(HBNBCommand().onecmd('Review.destroy(1)'))
+            HBNBCommand().onecmd('Review.destroy(1)')
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
@@ -1367,6 +1691,60 @@ class TestHBNBCommandReview(unittest.TestCase):
             HBNBCommand().onecmd('count Review')
             count = f.getvalue().split('\n')[2].strip()
             self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Review')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing_class_method(self):
+        '''Test 'Review.update()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.update()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Review 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance_class_method(self):
+        '''Test 'Review.update()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.update(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 if __name__ == '__main__':
