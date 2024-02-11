@@ -189,7 +189,8 @@ class HBNBCommand(cmd.Cmd):
                 tokens = [x for x in tokens if x not in ',:}{']
                 for i in range(0, len(tokens), 2):
                     line = shlex.join([classname,
-                                       inputs[0].strip(), tokens[i], tokens[i+1]])
+                                       inputs[0].strip(), tokens[i],
+                                       tokens[i+1]])
                     self.do_update(line)
             else:
                 for i, inp in enumerate(inputs):
