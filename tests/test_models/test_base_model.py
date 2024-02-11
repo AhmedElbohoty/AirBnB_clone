@@ -2,6 +2,7 @@
 '''Unit tests for base model module'''
 import unittest
 import datetime
+from time import sleep
 import models
 from models.base_model import BaseModel
 
@@ -38,6 +39,20 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(hasattr(bm, 'updated_at'))
         self.assertIsInstance(bm.created_at, datetime.datetime)
         self.assertIsInstance(bm.updated_at, datetime.datetime)
+
+    def test_two_objects_created_at(self):
+        '''Test objects created_at date'''
+        bm_1 = BaseModel()
+        sleep(0.01)
+        bm_2 = BaseModel()
+        self.assertLess(bm_1.created_at, bm_2.created_at)
+
+    def test_two_objects_updated_at(self):
+        '''Test objects updated_at date'''
+        bm_1 = BaseModel()
+        sleep(0.01)
+        bm_2 = BaseModel()
+        self.assertLess(bm_1.updated_at, bm_2.updated_at)
 
     def test_save(self):
         '''Tests for public 'save' method'''
