@@ -2,11 +2,20 @@
 '''Unit tests for user module'''
 import unittest
 import datetime
+import models
 from models.user import User
 
 
 class TestUser(unittest.TestCase):
     '''Unit tests for user model'''
+
+    def test_create_user_no_args(self):
+        '''Create user with no args'''
+        self.assertEqual(User, type(User()))
+
+    def test_new_user_in_objects(self):
+        '''Check if newly created user in objects'''
+        self.assertIn(User(), models.storage.all().values())
 
     def test_user_id(self):
         '''Check if id creation wroks well'''
