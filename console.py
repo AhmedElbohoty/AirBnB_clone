@@ -149,7 +149,7 @@ class HBNBCommand(cmd.Cmd):
 
         classname = args[0]
         if classname not in classes:
-            super().default(line)
+            print('** class doesn\'t exist **')
             return
 
         method = args[1].split('(')[0]
