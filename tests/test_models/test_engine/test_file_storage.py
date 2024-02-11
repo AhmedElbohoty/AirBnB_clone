@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 '''Unit tests for file storage module'''
 import unittest
+import json
 import models
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
@@ -87,16 +88,31 @@ class TestFileStorageApp(unittest.TestCase):
     def test_reload(self):
         '''Test 'reload' method'''
         storage = self.storage
-        bm = BaseModel()
 
+        bm = BaseModel()
         storage.new(bm)
         storage.save()
+
         storage.reload()
 
         objects_attr = '_FileStorage__objects'
         objects = getattr(models.storage, objects_attr)
 
         self.assertIn('BaseModel.{}'.format(bm.id), objects)
+
+    def test_save_method(self):
+        ''''Tests the save method'''
+        storage = self.storage
+
+        bm = BaseModel()
+        storage.new(bm)
+        storage.save()
+
+        with open('test_file.json', 'r', encoding='UTF -8') as f:
+            data = json.load(f)
+            key = 'BaseModel.{}'.format(bm.id)
+            self.assertIn(key, data)
+            self.assertEqual(str(data[key]), str(bm.to_dict()))
 
 
 if __name__ == '__main__':
