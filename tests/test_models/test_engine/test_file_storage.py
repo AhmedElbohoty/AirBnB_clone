@@ -70,6 +70,16 @@ class TestFileStorageApp(unittest.TestCase):
         self.assertEqual(storage.all(), {})
         self.assertEqual(dict, type(storage.all()))
 
+    def test_all_non_empty(self):
+        '''Test the all 'method' non-empty'''
+        storage = self.storage
+
+        bm = BaseModel()
+        storage.new(bm)
+
+        key = 'BaseModel.{}'.format(bm.id)
+        self.assertEqual(storage.all(), {key: bm})
+
     def test_new_with_none(self):
         '''Test 'new' method '''
         with self.assertRaises(AttributeError):
