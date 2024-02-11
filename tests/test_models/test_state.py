@@ -19,6 +19,9 @@ class TestState(unittest.TestCase):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
 
+    def tearDown(self):
+        models.storage.reset()
+
     def test_state_id(self):
         '''Check if id creation wroks well'''
         state_1 = State()

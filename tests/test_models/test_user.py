@@ -19,6 +19,9 @@ class TestUserBaseModel(unittest.TestCase):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
 
+    def tearDown(self):
+        models.storage.reset()
+
     def test_user_id(self):
         '''Check if id creation wroks well'''
         user_1 = User()
@@ -87,6 +90,9 @@ class TestUser(unittest.TestCase):
     def tearDownClass(cls):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
+
+    def tearDown(self):
+        models.storage.reset()
 
     def test_create_user_no_args(self):
         '''Create user with no args'''

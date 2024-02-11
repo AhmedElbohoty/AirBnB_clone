@@ -60,6 +60,9 @@ class TestFileStorageApp(unittest.TestCase):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
 
+    def tearDown(self):
+        models.storage.reset()
+
     def test_app_storage(self):
         '''Check if the main file storage is created'''
         storage = FileStorage()
@@ -68,7 +71,7 @@ class TestFileStorageApp(unittest.TestCase):
     def test_all(self):
         '''Test 'all' method'''
         storage = FileStorage()
-        # self.assertEqual(storage.all(), {})
+        self.assertEqual(storage.all(), {})
         self.assertEqual(dict, type(storage.all()))
 
     def test_new_with_none(self):

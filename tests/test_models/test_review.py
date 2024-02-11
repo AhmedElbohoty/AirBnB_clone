@@ -19,6 +19,9 @@ class TestReview(unittest.TestCase):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
 
+    def tearDown(self):
+        models.storage.reset()
+
     def test_review_id(self):
         '''Check if id creation wroks well'''
         review_1 = Review()

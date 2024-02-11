@@ -19,6 +19,9 @@ class TestBaseModel(unittest.TestCase):
         '''Update file path for app'''
         models.storage.update_file_path('file.json')
 
+    def tearDown(self):
+        models.storage.reset()
+
     def test_base_model_id(self):
         '''Check if id creation wroks well'''
         bm_1 = BaseModel()
