@@ -991,5 +991,383 @@ class TestHBNBCommandPlace(unittest.TestCase):
             self.assertEqual(count, '0')
 
 
+class TestHBNBCommandState(unittest.TestCase):
+    '''Unit tests for hbnb command - State'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
+
+    def tearDown(self):
+        models.storage.reset()
+
+    def test_show_missing_id(self):
+        '''Test 'do_show' method with missing id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show State')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_missing_id_class_method(self):
+        '''Test 'State.show' method with missing id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.show()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_no_instance_found(self):
+        '''Test 'do_show' method with no instance id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show State 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_no_instance_found_class_method(self):
+        '''Test 'State.show(1)' method with no instance id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.show(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_create_object(self):
+        '''Test 'do_create' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create State')
+
+            obj_id = f.getvalue().strip()
+            self.assertTrue(uuid.UUID(str(obj_id)))
+
+    def test_create_object_class_method(self):
+        '''Test 'create' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.create()')
+
+            obj_id = f.getvalue().strip()
+            self.assertTrue(uuid.UUID(str(obj_id)))
+
+    def test_show_object(self):
+        '''Test 'do_show' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create State')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('show State {}'.format(obj_id))
+
+            obj = f.getvalue().split('\n')[1].strip()
+            self.assertTrue(obj.startswith('[State] ({})'.format(obj_id)))
+
+    def test_show_object_class_method(self):
+        '''Test 'show' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.create()')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('State.show({})'.format(obj_id))
+
+            obj = f.getvalue().split('\n')[1].strip()
+            self.assertTrue(obj.startswith('[State] ({})'.format(obj_id)))
+
+    def test_count_object(self):
+        '''Test 'do_count' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create State')
+            HBNBCommand().onecmd('count State')
+
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+    def test_count_object_class_method(self):
+        '''Test 'count' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.create()')
+            HBNBCommand().onecmd('State.count()')
+
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+    def test_destroy_no_class(self):
+        '''Test 'destroy' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy'))
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_invalid_class(self):
+        '''Test 'destroy' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_id_missing(self):
+        '''Test 'destroy' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy State'))
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_id_missing_class_method(self):
+        '''Test 'State.destroy()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('State.destroy()'))
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_no_instance(self):
+        '''Test 'destroy' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy State 1'))
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_no_instance_class_method(self):
+        '''Test 'State.destroy()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('State.destroy(1)'))
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_objects(self):
+        '''Test 'destroy' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create State')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('count State')
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+            HBNBCommand().onecmd('destroy State {}'.format(obj_id))
+            HBNBCommand().onecmd('count State')
+            count = f.getvalue().split('\n')[2].strip()
+            self.assertEqual(count, '0')
+
+    def test_destroy_objects_class_method(self):
+        '''Test 'State.destroy()' '''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.create()')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('count State')
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+            HBNBCommand().onecmd('State.destroy({})'.format(obj_id))
+            HBNBCommand().onecmd('count State')
+            count = f.getvalue().split('\n')[2].strip()
+            self.assertEqual(count, '0')
+
+
+class TestHBNBCommandReview(unittest.TestCase):
+    '''Unit tests for hbnb command - Review'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
+
+    def tearDown(self):
+        models.storage.reset()
+
+    def test_show_missing_id(self):
+        '''Test 'do_show' method with missing id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show Review')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_missing_id_class_method(self):
+        '''Test 'Review.show' method with missing id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.show()')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_no_instance_found(self):
+        '''Test 'do_show' method with no instance id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show Review 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_no_instance_found_class_method(self):
+        '''Test 'Review.show(1)' method with no instance id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.show(1)')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_create_object(self):
+        '''Test 'do_create' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+
+            obj_id = f.getvalue().strip()
+            self.assertTrue(uuid.UUID(str(obj_id)))
+
+    def test_create_object_class_method(self):
+        '''Test 'create' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.create()')
+
+            obj_id = f.getvalue().strip()
+            self.assertTrue(uuid.UUID(str(obj_id)))
+
+    def test_show_object(self):
+        '''Test 'do_show' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('show Review {}'.format(obj_id))
+
+            obj = f.getvalue().split('\n')[1].strip()
+            self.assertTrue(obj.startswith('[Review] ({})'.format(obj_id)))
+
+    def test_show_object_class_method(self):
+        '''Test 'show' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.create()')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('Review.show({})'.format(obj_id))
+
+            obj = f.getvalue().split('\n')[1].strip()
+            self.assertTrue(obj.startswith('[Review] ({})'.format(obj_id)))
+
+    def test_count_object(self):
+        '''Test 'do_count' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            HBNBCommand().onecmd('count Review')
+
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+    def test_count_object_class_method(self):
+        '''Test 'count' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.create()')
+            HBNBCommand().onecmd('Review.count()')
+
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+    def test_destroy_no_class(self):
+        '''Test 'destroy' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy'))
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_invalid_class(self):
+        '''Test 'destroy' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy InvalidModel'))
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('InvalidModel.destroy()'))
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_id_missing(self):
+        '''Test 'destroy' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy Review'))
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_id_missing_class_method(self):
+        '''Test 'Review.destroy()' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('Review.destroy()'))
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_no_instance(self):
+        '''Test 'destroy' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('destroy Review 1'))
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_no_instance_class_method(self):
+        '''Test 'Review.destroy()' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.assertFalse(HBNBCommand().onecmd('Review.destroy(1)'))
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_objects(self):
+        '''Test 'destroy' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+            HBNBCommand().onecmd('destroy Review {}'.format(obj_id))
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[2].strip()
+            self.assertEqual(count, '0')
+
+    def test_destroy_objects_class_method(self):
+        '''Test 'Review.destroy()' '''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.create()')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+            HBNBCommand().onecmd('Review.destroy({})'.format(obj_id))
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[2].strip()
+            self.assertEqual(count, '0')
+
+
 if __name__ == '__main__':
     unittest.main()
