@@ -50,27 +50,22 @@ class TestFileStorage(unittest.TestCase):
 class TestFileStorageApp(unittest.TestCase):
     '''Unit tests for the main app storage'''
 
-    @classmethod
-    def setUpClass(cls):
-        '''Update file path for test'''
-        models.storage.update_file_path('test_file.json')
-
-    @classmethod
-    def tearDownClass(cls):
-        '''Update file path for app'''
-        models.storage.update_file_path('file.json')
+    def setUp(self):
+        '''Create storage'''
+        self.storage = FileStorage()
+        self.storage.update_file_path('test_file.json')
 
     def tearDown(self):
-        models.storage.reset()
+        '''Reset storage'''
+        self.storage.reset()
 
     def test_app_storage(self):
         '''Check if the main file storage is created'''
-        storage = FileStorage()
-        self.assertEqual(type(storage), FileStorage)
+        self.assertEqual(type(self.storage), FileStorage)
 
     def test_all(self):
         '''Test 'all' method'''
-        storage = FileStorage()
+        storage = self.storage
         self.assertEqual(storage.all(), {})
         self.assertEqual(dict, type(storage.all()))
 
@@ -79,11 +74,21 @@ class TestFileStorageApp(unittest.TestCase):
         with self.assertRaises(AttributeError):
             models.storage.new(None)
 
-    def test_reload(self):
+    def test_new(self):
         '''Test 'reload' method'''
+        storage = self.storage
         bm = BaseModel()
 
-        storage = models.storage
+        storage.new(bm)
+        key = 'BaseModel.{}'.format(bm.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(bm))
+
+    def test_reload(self):
+        '''Test 'reload' method'''
+        storage = self.storage
+        bm = BaseModel()
+
         storage.new(bm)
         storage.save()
         storage.reload()

@@ -87,10 +87,10 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertEqual(string, '[{}] ({}) {}'.format(
             classname, instance_id, instance_dict))
-        self.assertIn("[BaseModel]", string)
-        self.assertIn("id", string)
-        self.assertIn("created_at", string)
-        self.assertIn("updated_at", string)
+        self.assertIn('[BaseModel]', string)
+        self.assertIn('id', string)
+        self.assertIn('created_at', string)
+        self.assertIn('updated_at', string)
 
 
 if __name__ == '__main__':
