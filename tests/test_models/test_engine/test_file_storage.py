@@ -53,7 +53,7 @@ class TestFileStorageApp(unittest.TestCase):
 
     def setUp(self):
         '''Create storage'''
-        self.storage = FileStorage()
+        self.storage = models.storage
         self.storage.update_file_path('test_file.json')
 
     def tearDown(self):
