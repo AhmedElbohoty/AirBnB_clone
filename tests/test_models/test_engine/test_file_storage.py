@@ -3,6 +3,7 @@
 import unittest
 import models
 from models.engine.file_storage import FileStorage
+from models.base_model import BaseModel
 
 
 class TestFileStorage(unittest.TestCase):
@@ -71,6 +72,20 @@ class TestFileStorageApp(unittest.TestCase):
         '''Test 'new' method '''
         with self.assertRaises(AttributeError):
             models.storage.new(None)
+
+    def test_reload(self):
+        '''Test 'reload' method'''
+        bm = BaseModel()
+
+        storage = models.storage
+        storage.new(bm)
+        storage.save()
+        storage.reload()
+
+        objects_attr = '_FileStorage__objects'
+        objects = getattr(models.storage, objects_attr)
+
+        self.assertIn('BaseModel.{}'.format(bm.id), objects)
 
 
 if __name__ == '__main__':
