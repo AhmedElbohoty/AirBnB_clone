@@ -2,6 +2,10 @@
 '''Unit tests for review module'''
 import unittest
 import datetime
+import uuid
+from io import StringIO
+from unittest.mock import patch
+from console import HBNBCommand
 import models
 from models.review import Review
 from models.place import Place
@@ -158,6 +162,158 @@ class TestReview(unittest.TestCase):
         self.assertNotEqual(new_review.updated_at, review.updated_at)
 
         self.assertFalse(new_review is review)
+
+
+class TestHBNBCommandReview(unittest.TestCase):
+    '''Unit tests for hbnb command - Review'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
+
+    def tearDown(self):
+        models.storage.reset()
+
+    def test_show_missing_id(self):
+        '''Test 'do_show' method with missing id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show Review')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_show_no_instance_found(self):
+        '''Test 'do_show' method with no instance id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('show Review 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_create_object(self):
+        '''Test 'do_create' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+
+            obj_id = f.getvalue().strip()
+            self.assertTrue(uuid.UUID(str(obj_id)))
+
+    def test_show_object(self):
+        '''Test 'do_show' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('show Review {}'.format(obj_id))
+
+            obj = f.getvalue().split('\n')[1].strip()
+            self.assertTrue(obj.startswith('[Review] ({})'.format(obj_id)))
+
+    def test_count_object(self):
+        '''Test 'do_count' method'''
+        models.storage.reset()
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            HBNBCommand().onecmd('count Review')
+
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+    def test_destroy_no_class(self):
+        '''Test 'destroy' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('destroy')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_invalid_class(self):
+        '''Test 'destroy' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('destroy InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.destroy()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_id_missing(self):
+        '''Test 'destroy' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('destroy Review')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_no_instance(self):
+        '''Test 'destroy' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('destroy Review 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_destroy_objects(self):
+        '''Test 'destroy' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('create Review')
+            obj_id = f.getvalue().strip()
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[1].strip()
+            self.assertEqual(count, '1')
+
+            HBNBCommand().onecmd('destroy Review {}'.format(obj_id))
+            HBNBCommand().onecmd('count Review')
+            count = f.getvalue().split('\n')[2].strip()
+            self.assertEqual(count, '0')
+
+    def test_update_no_class(self):
+        '''Test 'update' method with no class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update')
+
+            msg = '** class name missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_invalid_class(self):
+        '''Test 'update' method with invalid class'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update InvalidModel')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('InvalidModel.update()')
+
+            msg = '** class doesn\'t exist **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_id_missing(self):
+        '''Test 'update' method with no id'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Review')
+
+            msg = '** instance id missing **'
+            self.assertEqual(msg, f.getvalue().strip())
+
+    def test_update_no_instance(self):
+        '''Test 'update' method with no instance'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('update Review 1')
+
+            msg = '** no instance found **'
+            self.assertEqual(msg, f.getvalue().strip())
 
 
 if __name__ == '__main__':
