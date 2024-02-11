@@ -156,16 +156,25 @@ class HBNBCommand(cmd.Cmd):
         if method == 'count':
             self.do_count(classname)
 
-        if method == 'all':
+        elif method == 'all':
             self.do_all(classname)
 
-        if method == 'destroy':
+        elif method == 'destroy':
             obj_id = args[1].split('(')[1].split(')')[0]
             self.do_destroy('{} {}'.format(classname, obj_id))
 
-        if method == 'show':
+        elif method == 'show':
             obj_id = args[1].split('(')[1].split(')')[0]
             self.do_show('{} {}'.format(classname, obj_id))
+
+        elif method == 'update':
+            inputs = args[1].split('(')[1].split(')')[0].split(',')
+            line = ''
+            for i, inp in enumerate(inputs):
+                line += inp.strip()
+                if i != len(inputs) - 1:
+                    line += ' '
+            self.do_update('{} {}'.format(classname, line))
 
     def validate_input(self, inputs, args):
         '''Validate user input
