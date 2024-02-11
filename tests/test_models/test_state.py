@@ -84,8 +84,8 @@ class TestStateBaseModel(unittest.TestCase):
                          state.updated_at.isoformat())
 
 
-class TestUser(unittest.TestCase):
-    '''Unit tests for user model'''
+class Teststate(unittest.TestCase):
+    '''Unit tests for state model'''
 
     @classmethod
     def setUpClass(cls):
@@ -100,8 +100,8 @@ class TestUser(unittest.TestCase):
     def tearDown(self):
         models.storage.reset()
 
-    def test_create_user_no_args(self):
-        '''Create user with no args'''
+    def test_create_state_no_args(self):
+        '''Create state with no args'''
         self.assertEqual(State, type(State()))
 
     def test_state_name(self):
