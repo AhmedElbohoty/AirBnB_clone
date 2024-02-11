@@ -81,6 +81,22 @@ class TestUserBaseModel(unittest.TestCase):
         self.assertEqual(user_json['created_at'], user.created_at.isoformat())
         self.assertEqual(user_json['updated_at'], user.updated_at.isoformat())
 
+    def test___str__(self):
+        '''Test string representation for User'''
+        user = User()
+        string = str(user)
+
+        instance_id = user.id
+        classname = user.__class__.__name__
+        instance_dict = user.__dict__
+
+        self.assertEqual(string, '[{}] ({}) {}'.format(
+            classname, instance_id, instance_dict))
+        self.assertIn('[User]', string)
+        self.assertIn('id', string)
+        self.assertIn('created_at', string)
+        self.assertIn('updated_at', string)
+
 
 class TestUser(unittest.TestCase):
     '''Unit tests for user model'''
