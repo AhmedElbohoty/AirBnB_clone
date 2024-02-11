@@ -4,7 +4,7 @@ HBNBCommand:
     the entry point of the command interpreter.
 '''
 import cmd
-import re
+import shlex
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
@@ -169,12 +169,32 @@ class HBNBCommand(cmd.Cmd):
 
         elif method == 'update':
             inputs = args[1].split('(')[1].split(')')[0].split(',')
-            line = ''
-            for i, inp in enumerate(inputs):
-                line += inp.strip()
-                if i != len(inputs) - 1:
-                    line += ' '
-            self.do_update('{} {}'.format(classname, line))
+            line = '{} '.format(classname)
+
+            if len(inputs) == 1:
+                line += inputs[0].strip()
+                self.do_update(line)
+                return
+
+            # Check if dictionary representaion is provided
+            dict_str = args[1].split('(')[1].split(')')[
+                0].partition(',')[2].strip()
+
+            tokens = list(shlex.shlex(
+                dict_str, posix=True, punctuation_chars=True))
+            if tokens[0] == '{' and tokens[len(tokens)-1] == '}':
+                tokens = [x for x in tokens if x not in ',:}{']
+                for i in range(0, len(tokens), 2):
+                    line = shlex.join([classname,
+                                       inputs[0].strip(), tokens[i], tokens[i+1]])
+                    self.do_update(line)
+            else:
+                for i, inp in enumerate(inputs):
+                    line += inp.strip()
+                    if i != len(inputs) - 1:
+                        line += ' '
+
+            self.do_update(line)
 
     def validate_input(self, inputs, args):
         '''Validate user input
