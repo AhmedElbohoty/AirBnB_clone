@@ -76,6 +76,22 @@ class TestBaseModel(unittest.TestCase):
 
         self.assertFalse(new_bm is bm)
 
+    def test___str__(self):
+        '''Test string representation for BaseModel'''
+        bm = BaseModel()
+        string = str(bm)
+
+        instance_id = bm.id
+        classname = bm.__class__.__name__
+        instance_dict = bm.__dict__
+
+        self.assertEqual(string, '[{}] ({}) {}'.format(
+            classname, instance_id, instance_dict))
+        self.assertIn("[BaseModel]", string)
+        self.assertIn("id", string)
+        self.assertIn("created_at", string)
+        self.assertIn("updated_at", string)
+
 
 if __name__ == '__main__':
     unittest.main()
