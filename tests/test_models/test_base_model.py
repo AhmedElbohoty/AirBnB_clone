@@ -61,6 +61,21 @@ class TestBaseModel(unittest.TestCase):
         bm.save()
         self.assertTrue(old_updated_at < bm.updated_at)
 
+    def test_save_no_args(self):
+        '''Tests for public 'save' method with no args'''
+
+        with self.assertRaises(TypeError) as e:
+            BaseModel.save()
+        msg = 'BaseModel.save() missing 1 required positional argument: \'self\''
+        self.assertEqual(str(e.exception), msg)
+
+    def test_save_extra_arg(self):
+        '''Tests for public 'save' method with extra arg'''
+        with self.assertRaises(TypeError) as e:
+            BaseModel.save(self, '000')
+        msg = 'BaseModel.save() takes 1 positional argument but 2 were given'
+        self.assertEqual(str(e.exception), msg)
+
     def test_to_dict(self):
         '''Tests for 'to_dict' method'''
         bm = BaseModel()
