@@ -121,7 +121,7 @@ class HBNBCommand(cmd.Cmd):
 
         classname = inputs[0]
         if classname not in self.__classes:
-            print("** class doesn't exist **")
+            print('** class doesn\'t exist **')
             return
 
         for _, v in objects.items():

@@ -25,6 +25,34 @@ class TestUser(unittest.TestCase):
         self.assertIsInstance(user.created_at, datetime.datetime)
         self.assertIsInstance(user.updated_at, datetime.datetime)
 
+    def test_user_names(self):
+        '''Tests for first_name and last_name attributes'''
+        user = User()
+        self.assertTrue(hasattr(user, 'first_name'))
+        self.assertTrue(hasattr(user, 'last_name'))
+        self.assertTrue(user.first_name == '')
+        self.assertTrue(user.last_name == '')
+        user.first_name = 'Ahmed'
+        user.last_name = 'Elbohoty'
+        self.assertEqual(user.first_name, 'Ahmed')
+        self.assertEqual(user.last_name, 'Elbohoty')
+
+    def test_user_email(self):
+        '''Tests for email attribute'''
+        user = User()
+        self.assertTrue(hasattr(user, 'email'))
+        self.assertTrue(user.email == '')
+        user.email = 'ahmed@email.com'
+        self.assertEqual(user.email, 'ahmed@email.com')
+
+    def test_password(self):
+        '''Tests for first and last name attribute'''
+        user = User()
+        self.assertTrue(hasattr(user, 'password'))
+        self.assertTrue(user.email == '')
+        user.password = '0000'
+        self.assertEqual(user.password, '0000')
+
     def test_save(self):
         '''Tests for public 'save' method'''
         user = User()
