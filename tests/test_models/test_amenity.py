@@ -2,11 +2,22 @@
 '''Unit tests for amenity module'''
 import unittest
 import datetime
+import models
 from models.amenity import Amenity
 
 
 class TestAmenity(unittest.TestCase):
     '''Unit tests for amenity model'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
 
     def test_amenity_id(self):
         '''Check if id creation wroks well'''

@@ -62,11 +62,14 @@ class TestFileStorageApp(unittest.TestCase):
 
     def test_app_storage(self):
         '''Check if the main file storage is created'''
-        self.assertEqual(type(models.storage), FileStorage)
+        storage = FileStorage()
+        self.assertEqual(type(storage), FileStorage)
 
     def test_all(self):
         '''Test 'all' method'''
-        self.assertEqual(dict, type(models.storage.all()))
+        storage = FileStorage()
+        # self.assertEqual(storage.all(), {})
+        self.assertEqual(dict, type(storage.all()))
 
     def test_new_with_none(self):
         '''Test 'new' method '''

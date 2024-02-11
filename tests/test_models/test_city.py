@@ -2,12 +2,23 @@
 '''Unit tests for city module'''
 import unittest
 import datetime
+import models
 from models.city import City
 from models.state import State
 
 
 class TestCity(unittest.TestCase):
     '''Unit tests for city model'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
 
     def test_state_id(self):
         '''Check if id creation wroks well'''

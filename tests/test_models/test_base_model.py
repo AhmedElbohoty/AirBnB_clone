@@ -2,11 +2,22 @@
 '''Unit tests for base model module'''
 import unittest
 import datetime
+import models
 from models.base_model import BaseModel
 
 
 class TestBaseModel(unittest.TestCase):
     '''Unit tests for base model'''
+
+    @classmethod
+    def setUpClass(cls):
+        '''Update file path for test'''
+        models.storage.update_file_path('test_file.json')
+
+    @classmethod
+    def tearDownClass(cls):
+        '''Update file path for app'''
+        models.storage.update_file_path('file.json')
 
     def test_base_model_id(self):
         '''Check if id creation wroks well'''
