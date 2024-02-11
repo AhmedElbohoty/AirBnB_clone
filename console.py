@@ -159,6 +159,9 @@ class HBNBCommand(cmd.Cmd):
         elif method == 'all':
             self.do_all(classname)
 
+        elif method == 'create':
+            self.do_create(classname)
+
         elif method == 'destroy':
             obj_id = args[1].split('(')[1].split(')')[0]
             self.do_destroy('{} {}'.format(classname, obj_id))
