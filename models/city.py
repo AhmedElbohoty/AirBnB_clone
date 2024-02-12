@@ -9,9 +9,9 @@ class City(BaseModel):
     '''City:
 
     Attributes:
-        state_id (str): The State id.
         name (str): city.
+        state_id (str): The State id.
     '''
 
-    state_id = ''
     name = ''
+    state_id = ''
