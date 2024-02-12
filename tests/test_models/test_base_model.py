@@ -66,14 +66,14 @@ class TestBaseModel(unittest.TestCase):
 
         with self.assertRaises(TypeError) as e:
             BaseModel.save()
-        msg = 'BaseModel.save() missing 1 required positional argument: \'self\''
+        msg = 'save() missing 1 required positional argument: \'self\''
         self.assertEqual(str(e.exception), msg)
 
     def test_save_extra_arg(self):
         '''Tests for public 'save' method with extra arg'''
         with self.assertRaises(TypeError) as e:
             BaseModel.save(self, '000')
-        msg = 'BaseModel.save() takes 1 positional argument but 2 were given'
+        msg = 'save() takes 1 positional argument but 2 were given'
         self.assertEqual(str(e.exception), msg)
 
     def test_to_dict(self):
