@@ -5,6 +5,12 @@ import json
 import models
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class TestFileStorage(unittest.TestCase):
@@ -53,9 +59,109 @@ class TestFileStorage(unittest.TestCase):
             FileStorage.__init__()
 
     def test_init_extra_arg(self):
-        '''Tests __init__ with many arguments.'''
+        '''Tests __init__ with many arguments'''
         with self.assertRaises(TypeError):
             FileStorage('arg')
+
+
+class TestFileStorageAll(unittest.TestCase):
+    '''Unit tests for 'all' method'''
+
+    def setUp(self):
+        '''Create storage'''
+        self.storage = models.storage
+        self.storage.update_file_path('test_file.json')
+
+    def tearDown(self):
+        '''Reset storage'''
+        self.storage.reset()
+
+    def test_all_base_model(self):
+        '''Tests 'all' method for BaseModel'''
+        storage = self.storage
+
+        bm = BaseModel()
+        storage.new(bm)
+        key = 'BaseModel.{}'.format(bm.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], bm)
+
+    def test_all_user(self):
+        '''Tests 'all' method for User'''
+        storage = self.storage
+
+        user = User()
+        storage.new(user)
+        key = 'User.{}'.format(user.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], user)
+
+    def test_all_state(self):
+        '''Tests 'all' method for State'''
+        storage = self.storage
+
+        state = State()
+        storage.new(state)
+        key = 'State.{}'.format(state.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], state)
+
+    def test_all_city(self):
+        '''Tests 'all' method for City'''
+        storage = self.storage
+
+        city = City()
+        storage.new(city)
+        key = 'City.{}'.format(city.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], city)
+
+    def test_all_amenity(self):
+        '''Tests 'all' method for Amenity'''
+        storage = self.storage
+
+        amenity = Amenity()
+        storage.new(amenity)
+        key = 'Amenity.{}'.format(amenity.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], amenity)
+
+    def test_all_place(self):
+        '''Tests 'all' method for Place'''
+        storage = self.storage
+
+        place = Place()
+        storage.new(place)
+        key = 'Place.{}'.format(place.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], place)
+
+    def test_all_review(self):
+        '''Tests 'all' method for Review'''
+        storage = self.storage
+
+        review = Review()
+        storage.new(review)
+        key = 'Review.{}'.format(review.id)
+
+        self.assertTrue(key in storage.all())
+        self.assertEqual(storage.all()[key], review)
+
+    def test_all_no_args(self):
+        '''Tests 'all' with no arguments'''
+        with self.assertRaises(TypeError):
+            FileStorage.all()
+
+    def test_all_excess_args(self):
+        '''Tests 'all' with extra argument'''
+        with self.assertRaises(TypeError):
+            FileStorage.all(self, 'arg')
 
 
 class TestFileStorageApp(unittest.TestCase):
