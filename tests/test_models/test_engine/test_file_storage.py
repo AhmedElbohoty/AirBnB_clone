@@ -203,7 +203,7 @@ class TestFileStorageNew(unittest.TestCase):
         self.assertEqual(str(storage.all()[key]), str(bm))
 
     def test_new_user(self):
-        '''Test 'new' method'''
+        '''Test 'new' method for User'''
         storage = self.storage
         user = User()
 
@@ -211,6 +211,56 @@ class TestFileStorageNew(unittest.TestCase):
         key = 'User.{}'.format(user.id)
         self.assertIn(key, storage.all())
         self.assertEqual(str(storage.all()[key]), str(user))
+
+    def test_new_amenity(self):
+        '''Test 'new' method for Amenity'''
+        storage = self.storage
+        amenity = Amenity()
+
+        storage.new(amenity)
+        key = 'Amenity.{}'.format(amenity.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(amenity))
+
+    def test_new_city(self):
+        '''Test 'new' method for City'''
+        storage = self.storage
+        city = City()
+
+        storage.new(city)
+        key = 'City.{}'.format(city.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(city))
+
+    def test_new_place(self):
+        '''Test 'new' method for Place'''
+        storage = self.storage
+        place = Place()
+
+        storage.new(place)
+        key = 'Place.{}'.format(place.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(place))
+
+    def test_new_review(self):
+        '''Test 'new' method for Review'''
+        storage = self.storage
+        review = Review()
+
+        storage.new(review)
+        key = 'Review.{}'.format(review.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(review))
+
+    def test_new_state(self):
+        '''Test 'new' method for State'''
+        storage = self.storage
+        state = State()
+
+        storage.new(state)
+        key = 'State.{}'.format(state.id)
+        self.assertIn(key, storage.all())
+        self.assertEqual(str(storage.all()[key]), str(state))
 
 
 class TestFileStorageApp(unittest.TestCase):
