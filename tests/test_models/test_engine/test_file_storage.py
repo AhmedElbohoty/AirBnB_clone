@@ -284,6 +284,10 @@ class TestFileStorageApp(unittest.TestCase):
         with self.assertRaises(AttributeError):
             models.storage.new(None)
 
+    def test_reload_class(self):
+        '''Test 'reload' method'''
+        FileStorage().reload()
+
     def test_reload(self):
         '''Test 'reload' method'''
         storage = self.storage
