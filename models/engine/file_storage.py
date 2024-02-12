@@ -70,7 +70,7 @@ class FileStorage():
                 jsn = json.loads(file_obj.read())
                 self.serialize_loaded_json(jsn)
             except json.JSONDecodeError:
-                pass
+                return
 
     def update_file_path(self, arg):
         '''Update the file path'''
