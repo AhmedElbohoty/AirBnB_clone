@@ -354,6 +354,20 @@ class TestHBNBCommandUser(unittest.TestCase):
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
 
+    def test_class_all(self):
+        '''Test 'User.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('User.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create User')
+
+            HBNBCommand().onecmd('User.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[User] ({})'.format(obj_id) in output)
+
     def test_create_object(self):
         '''Test 'do_create' method'''
         with patch('sys.stdout', new=StringIO()) as f:
@@ -596,6 +610,20 @@ class TestHBNBCommandAmenity(unittest.TestCase):
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
+
+    def test_class_all(self):
+        '''Test 'Amenity.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Amenity.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create Amenity')
+
+            HBNBCommand().onecmd('Amenity.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[Amenity] ({})'.format(obj_id) in output)
 
     def test_create_object(self):
         '''Test 'do_create' method'''
