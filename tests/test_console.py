@@ -868,6 +868,20 @@ class TestHBNBCommandCity(unittest.TestCase):
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
 
+    def test_class_all(self):
+        '''Test 'City.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('City.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create City')
+
+            HBNBCommand().onecmd('City.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[City] ({})'.format(obj_id) in output)
+
     def test_create_object(self):
         '''Test 'do_create' method'''
         with patch('sys.stdout', new=StringIO()) as f:
@@ -1110,6 +1124,20 @@ class TestHBNBCommandPlace(unittest.TestCase):
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
+
+    def test_class_all(self):
+        '''Test 'Place.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Place.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create Place')
+
+            HBNBCommand().onecmd('Place.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[Place] ({})'.format(obj_id) in output)
 
     def test_create_object(self):
         '''Test 'do_create' method'''
@@ -1354,6 +1382,20 @@ class TestHBNBCommandState(unittest.TestCase):
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
 
+    def test_class_all(self):
+        '''Test 'State.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('State.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create State')
+
+            HBNBCommand().onecmd('State.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[State] ({})'.format(obj_id) in output)
+
     def test_create_object(self):
         '''Test 'do_create' method'''
         with patch('sys.stdout', new=StringIO()) as f:
@@ -1596,6 +1638,20 @@ class TestHBNBCommandReview(unittest.TestCase):
 
             msg = '** no instance found **'
             self.assertEqual(msg, f.getvalue().strip())
+
+    def test_class_all(self):
+        '''Test 'Review.all()' method'''
+        with patch('sys.stdout', new=StringIO()) as f:
+            HBNBCommand().onecmd('Review.all()')
+            output = f.getvalue().strip()
+            self.assertEqual(output, '[]')
+
+            HBNBCommand().onecmd('create Review')
+
+            HBNBCommand().onecmd('Review.all()')
+            obj_id = f.getvalue().split('\n')[1].strip()
+            output = f.getvalue().split('\n')[2].strip()
+            self.assertTrue('["[Review] ({})'.format(obj_id) in output)
 
     def test_create_object(self):
         '''Test 'do_create' method'''
