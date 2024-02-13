@@ -37,10 +37,10 @@ class TestHBNBCommand(unittest.TestCase):
     #     with patch('sys.stdout', new=StringIO()):
     #         self.assertTrue(HBNBCommand().onecmd('quit')
 
-    # def test_EOF(self):
-    #     '''Tests for 'EOF' method'''
-    #     with patch('sys.stdout', new=StringIO()):
-    #         self.assertTrue(HBNBCommand().onecmd('EOF')
+    def test_EOF(self):
+        '''Tests for 'EOF' method'''
+        with patch('sys.stdout', new=StringIO()):
+            self.assertTrue(HBNBCommand().onecmd('EOF'))
 
     def test_empty(self):
         '''Tests for empty line'''
