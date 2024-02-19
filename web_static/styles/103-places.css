@@ -211,11 +211,11 @@
   flex-direction: column;
   margin-bottom: 8px;
   font-weight: 700;
-  font-style: 14px;
+  font-size: 14px;
 }
 
 .reviews-text {
-  font-style: 12px;
+  font-size: 12px;
   line-height: 16px;
 }
 /* #endregion reviews */
